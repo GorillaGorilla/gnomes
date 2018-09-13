@@ -1,0 +1,10 @@
+node_modules
+test-reports
+test-results
+.env
+.gitignore
+.snyk
+bitbucket-pipelines.yml
+LICENCE.md
+README.md
+yarn.lock
