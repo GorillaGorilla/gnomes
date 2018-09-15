@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Gnome = require('./gnome');
 
 const loadTextFile = (path) => {
   return new Promise((resolve, reject) => {
@@ -11,10 +12,20 @@ const loadTextFile = (path) => {
   });
 };
 
+
+class Wall {
+  constructor(position) {
+    this.position = position;
+    this.type = 'WALL';
+  }
+}
+
 class Maze {
   constructor(path) {
     this.path = path || 'test_maze.txt';
     this.loaded = false;
+    this.x_dimension = null;
+    this.y_dimension = null;
     this.rows = [];
   }
 
@@ -42,7 +53,25 @@ class Maze {
       } 
       this.rows[row].push(el);
     });
+    this.y_dimension = this.rows.length;
+    this.x_dimension = this.rows[0].length;
     return this.rows;
+  }
+
+  placeGnome(gnome) {
+    let placed = false;
+    while (placed === false) {
+      const x = Math.floor(Math.random() * this.x_dimension);
+      const y = Math.floor(Math.random() * this.y_dimension);
+      console.log(y, x, this.rows[y][x]);
+
+      if (this.rows[y][x] === ' ') {
+        // space is free;
+        this.rows[y][x] = gnome;
+        gnome.position = [y, x];
+        placed = true;
+      }
+    }
   }
 }
 
