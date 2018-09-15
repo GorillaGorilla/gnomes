@@ -61,14 +61,14 @@ class Maze {
   }
 
   placeGnomeRandomly(gnome) {
-    console.log('hi');
     let placed = false;
     while (placed === false) {
       const x = Math.floor(Math.random() * this.x_dimension);
       const y = Math.floor(Math.random() * this.y_dimension);
-      console.log(y, x, this.rows[y][x]);
-      this.placeGnome(gnome, [y, x]);
+      if (this.rows[y][x] === ' ') {
+        this.placeGnome(gnome, [y, x]);
       placed = true;
+      }
     }
   }
 
