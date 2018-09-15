@@ -9,27 +9,32 @@ class Game {
   constructor(path){
     this.maze = new Maze(path);
     this.gnomes = [];
+    this.teams = {};
   }
 
-  createTeam(teamName, n, maze) {
+  createTeam(teamName, n) {
+    console.log('createTeam');
     return new Array(n).fill({}).map(() => {
       const gnome = newGnome(Math.floor(Math.random()*10), teamName);
       return gnome;
     });
   }
 
-  init() {
+  init(team1Name='beasts', team2Name='angels') {
+    console.log('init');
     return this.maze.init().then(() => {
-      this.team1 = this.createTeam('beasts', 2, this.maze)
-      this.team2 = this.createTeam('angels', 2, this.maze);
+      console.log('then', team1Name);
+      this.team1 = this.createTeam(team1Name, 2)
+      this.team2 = this.createTeam(team2Name, 2);
+      this.teams[team1Name] = this.team1;
+      this.teams[team2Name] = this.team2;
+      console.log('teams',this.teams);
       this.team1.forEach((gnome) => {
-        this.maze.placeGnome(gnome);
+        this.maze.placeGnomeRandomly(gnome);
       });
       this.team2.forEach((gnome) => {
-        this.maze.placeGnome(gnome);
+        this.maze.placeGnomeRandomly(gnome);
       });
-
-
       return;
     });
   }
@@ -67,8 +72,9 @@ class Game {
     this.removeGnome(g2.id);
     // create new gnome in spot
     const gnome = newGnome(newStrength, team);
-    this.maze.placeGnome(gnome);
+    this.maze.placeGnome(gnome, position);
     //  how do I know if its team one or two aaaaaaagh!
+    this.teams[team].push(gnome);
   }
 
   battleCollision(g1, g2) {

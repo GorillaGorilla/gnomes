@@ -30,6 +30,7 @@ class Maze {
   }
 
   init() {
+    console.log('mazeInit');
     return this.loadMaze().then(this.generateMaze.bind(this))
     .catch(e => console.log('error loading', e));
   }
@@ -42,6 +43,7 @@ class Maze {
   }
 
   generateMaze(data) {
+    console.log('generateMaze');
     let row = 0;
     this.rows[row] = [];
     // remember that coords are [y, x] >_<
@@ -58,20 +60,25 @@ class Maze {
     return this.rows;
   }
 
-  placeGnome(gnome) {
+  placeGnomeRandomly(gnome) {
+    console.log('hi');
     let placed = false;
     while (placed === false) {
       const x = Math.floor(Math.random() * this.x_dimension);
       const y = Math.floor(Math.random() * this.y_dimension);
       console.log(y, x, this.rows[y][x]);
-
-      if (this.rows[y][x] === ' ') {
-        // space is free;
-        this.rows[y][x] = gnome;
-        gnome.position = [y, x];
-        placed = true;
-      }
+      this.placeGnome(gnome, [y, x]);
+      placed = true;
     }
+  }
+
+  placeGnome(gnome, pos) {
+    if (this.rows[pos[0]][pos[1]] === ' ') {
+        // space is free;
+        this.rows[pos[0]][pos[1]] = gnome;
+        return gnome.position = pos;
+    }
+    throw new Error('Cannot place gnome in occupied position!');
   }
 }
 

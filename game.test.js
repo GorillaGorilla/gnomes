@@ -9,7 +9,7 @@ describe('Game', () => {
 
   beforeEach((done) => {
     game = new Game();
-    game.init().then(() => done());
+    return game.init().then(() => done());
   });
 
   it('should have a maze, and 2 teams', () => {
