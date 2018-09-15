@@ -63,6 +63,16 @@ describe('Loading the maze', () => {
       done();
     });
   });
+
+  it('should have a function isWalkable', () => {
+    const test_maze_path = './test_maze.txt';
+    const maze = new Maze(test_maze_path);
+    maze.init().then((data) => {
+      maze.isWalkable([1, 1]).should.equal(true);
+      maze.isWalkable([0, 0]).should.equal(false);
+    });
+    
+  })
 });
 
 
