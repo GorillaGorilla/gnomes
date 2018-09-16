@@ -10,6 +10,7 @@ class Game {
     this.maze = new Maze(path);
     this.gnomes = [];
     this.teams = {};
+    this.interval = null;
   }
 
   createTeam(teamName, n) {
@@ -19,18 +20,14 @@ class Game {
     });
   }
 
-  init(team1Name='beasts', team2Name='angels') {
+  init(teamNames, n) {
     return this.maze.init().then(() => {
-      this.team1 = this.createTeam(team1Name, 2)
-      this.team2 = this.createTeam(team2Name, 2);
-      this.teams[team1Name] = this.team1;
-      this.teams[team2Name] = this.team2;
-      this.team1.forEach((gnome) => {
-        this.maze.placeGnomeRandomly(gnome);
-      });
-      this.team2.forEach((gnome) => {
-        this.maze.placeGnomeRandomly(gnome);
-      });
+      teamNames.forEach((name) => this.teams[name] = this.createTeam(name, n));
+      for (const team in this.teams) {
+        this.teams[team].forEach((gnome) => {
+          this.maze.placeGnomeRandomly(gnome);
+        });
+      }
       return;
     });
   }
@@ -148,10 +145,19 @@ class Game {
   }
 
   render() {
-
     const output = this.rowsToString(this.getMazeRowsWithGnomes());
-    console.log('mazerows', this.rowsToString(this.maze.rows));
-    console.log('output', output);
+    console.log(output);
+  }
+
+  startSim(rate) {
+    this.interval = setInterval(() => {
+      this.step
+    }, rate);
+
+  }
+
+  stopSim() {
+    clearInterval(this.interval);
   }
 };
 

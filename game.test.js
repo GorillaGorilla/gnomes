@@ -9,18 +9,18 @@ describe('Game', () => {
 
   beforeEach(() => {
     game = new Game();
-    return game.init();
+    return game.init(['angels', 'beasts'], 2);
   });
 
   it('should have a maze, and 2 teams', () => {
     game.should.have.property('maze');
-    game.should.have.property('team2').of.length(2);
-    game.should.have.property('team1').of.length(2);
+    game.teams.should.have.property('angels').of.length(2);
+    game.teams.should.have.property('beasts').of.length(2);
   });
 
   it('should have a placed the gnomes in different positions', () => {
-    const pos1 = game.team1[0].position;
-    const pos2 = game.team2[0].position;
+    const pos1 = game.teams['beasts'][0].position;
+    const pos2 = game.teams['beasts'][1].position;
     (pos1[0] === pos2[0] && pos1[1] === pos2[1]).should.equal(false);
   });
 
