@@ -96,4 +96,45 @@ describe('Game', () => {
   it('should have a function to calculate when collisions occur between gnomes', () => {
 
   });
+
+  describe('Rendering the game state', () => {
+    it('should have a function to replicate the maze rows and add in gnomes', () => {
+      const pos1 = [4, 1];
+      const pos2 = [2, 1];
+      const destination = [3, 1];
+      const {beasts, angels}  = game.teams;
+      beasts.pop();
+      angels.pop();
+      beasts[0].position = pos1;
+      angels[0].position = pos2;
+      const rows = game.getMazeRowsWithGnomes();
+      rows[4][1].should.equal('1');
+      rows[2][1].should.equal('2');
+    });
+    it('should have a function to output the maze as a string', () => {
+      const pos1 = [4, 1];
+      const pos2 = [2, 1];
+      const destination = [3, 1];
+      const {beasts, angels}  = game.teams;
+      beasts.pop();
+      angels.pop();
+      beasts[0].position = pos1;
+      angels[0].position = pos2;
+      const rows = game.getMazeRowsWithGnomes();
+      const strings = game.rowsToString(rows);
+      // console.log('strings', strings);
+      strings.should.be.a('string');
+      
+    });
+    it('should render', () => {
+      game.step();
+      game.render();
+      game.step();
+      game.render();
+      game.step();
+      game.render();
+      game.step();
+      game.render();
+    });
+  })
 });

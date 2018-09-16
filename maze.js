@@ -13,13 +13,6 @@ const loadTextFile = (path) => {
 };
 
 
-class Wall {
-  constructor(position) {
-    this.position = position;
-    this.type = 'WALL';
-  }
-}
-
 class Maze {
   constructor(path) {
     this.path = path || 'test_maze.txt';
@@ -81,6 +74,10 @@ class Maze {
         return gnome.position = pos;
     }
     throw new Error('Cannot place gnome in occupied position!');
+  }
+
+  getMazeRowsCopy() {
+    return this.rows.map(el => el.map(e => e));
   }
 }
 

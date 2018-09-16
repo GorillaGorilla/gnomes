@@ -71,8 +71,5 @@ describe('Loading the maze', () => {
       maze.isWalkable([1, 1]).should.equal(true);
       maze.isWalkable([0, 0]).should.equal(false);
     });
-    
   })
 });
-
-

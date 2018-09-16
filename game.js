@@ -130,6 +130,29 @@ class Game {
       });
     }
   }
+  getMazeRowsWithGnomes() {
+    const rows = this.maze.getMazeRowsCopy();
+    for (const team in this.teams) {
+      this.teams[team].forEach((g) => {
+        const { position } = g;
+        rows[position[0]][position[1]] = team === 'angels' ? '2' : '1';
+      });
+    }
+    return rows;
+  }
+
+  rowsToString(rows) {
+    return rows.map((row) => row.join('')).reduce((a,c) => {
+      return a + '\n' + c;
+    });
+  }
+
+  render() {
+
+    const output = this.rowsToString(this.getMazeRowsWithGnomes());
+    console.log('mazerows', this.rowsToString(this.maze.rows));
+    console.log('output', output);
+  }
 };
 
 module.exports = {
