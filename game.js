@@ -69,29 +69,26 @@ class Game {
     const team = g1.team;
     const position = g1.moveToPos;
     // delete both gnomes
+    console.log(`${g1.name} and ${g2.name} from team ${team} have met at (${position[1]},${position[0]}) and combined into a strength ${newStrength} gnome.`);
+
     this.removeGnome(g1);
     this.removeGnome(g2);
     // create new gnome in spot
     const gnome = newGnome(newStrength, team);
     gnome.moveToPos = position;
-    //  how do I know if its team one or two aaaaaaagh!
     this.teams[team].push(gnome);
-  }
+    }
 
   battleCollision(g1, g2) {
     // delete weaker gnome
     const ranking = [g1, g2].sort((b, a) => {
       return a.strength - b.strength;
     });
-
-    this.removeGnome(ranking[1]);
-    // put stronger gnome in spot
-    // ***** will not work not all gnomes have moved yet therefore will be collisions... ***
-    // *** solution: split the checks from the matrix for moving object. 
-    // first check for physical barriers, update moveToPos (default to curent possition if cannot move) 
-    // then check for all collisions against moveToPos... call mvoe to post posTPlusOne... pos\' ???
+    const position = g1.moveToPos;
     const winningGnome = ranking[0];
-  }
+    console.log(`${winningGnome.name} from ${winningGnome.team}, ${ranking[1].name} from ${ranking[1].team} have fought at (${position[1]},${position[0]}) and ${winningGnome.name} from ${winningGnome.team} was victorious.`);
+    this.removeGnome(ranking[1]);
+    }
 
   removeGnome(gnome) {
     // change logic so that gnomes positions are not mapped into maze rows? Makes it easier to delete them in 1 place.
@@ -132,7 +129,7 @@ class Game {
     for (const team in this.teams) {
       this.teams[team].forEach((g) => {
         const { position } = g;
-        rows[position[0]][position[1]] = team === 'angels' ? '2' : '1';
+        rows[position[0]][position[1]] = team.split('')[0].toUpperCase();
       });
     }
     return rows;

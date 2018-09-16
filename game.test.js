@@ -108,8 +108,8 @@ describe('Game', () => {
       beasts[0].position = pos1;
       angels[0].position = pos2;
       const rows = game.getMazeRowsWithGnomes();
-      rows[4][1].should.equal('1');
-      rows[2][1].should.equal('2');
+      rows[4][1].should.equal('B');
+      rows[2][1].should.equal('A');
     });
     it('should have a function to output the maze as a string', () => {
       const pos1 = [4, 1];

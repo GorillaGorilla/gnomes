@@ -1,4 +1,6 @@
+const Chance = require('chance');
 
+const chance = new Chance();
 
 const randomCardinal = () => {
   const direction = {
@@ -20,6 +22,7 @@ class Gnome {
     this.position = [0, 0];
     this.moveSpeed = 1;
     this.brain = brain;
+    this.name = chance.name();
     this.inPlay = true;
   }
 
