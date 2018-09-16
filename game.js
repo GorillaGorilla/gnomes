@@ -37,35 +37,43 @@ class Game {
 
   checkCollisions() {
     // assume if 4 gnomes approach the same space at once 2 of each team they will combine first and then fight.
-    this.team1.forEach((g1) => {
-      this.team1.filter(g2 => g1.id !== g2.id).forEach((g2) => {
-        if (this.checkGnomeCollisions(g1, g2))
-          this.teamCollision(g1, g2);
+    
+    for (const team in this.teams) {
+      this.teams[team].forEach((g1) => {
+        this.teams[team].filter(g2 => g1.id !== g2.id).forEach((g2) => {
+          if (!g1.inPlay || !g2.inPlay) {
+            return;
+          }
+          if (this.checkGnomeCollisions(g1, g2)){
+            this.teamCollision(g1, g2);
+          }
+        });
       });
-    });
-    this.team2.forEach((g1) => {
-      this.team2.filter(g2 => g1.id !== g2.id).forEach((g2) => {
-        if (this.checkGnomeCollisions(g1, g2))
-          this.teamCollision(g1, g2);
-      });
-    });
-    this.team1.forEach((g1) => {
-      this.team2.filter(g2 => g1.id !== g2.id).forEach((g2) => {
-        if (this.checkGnomeCollisions(g1, g2))
-          this.battleCollision(g1, g2);
-      });
-    });
+    }
 
+    for (const team1 in this.teams) {
+      this.teams[team1].forEach((g1) => {
+        for (const team2 in this.teams) {
+          if (team2 !== team1) {
+            this.teams[team2].forEach((g2) => {
+              if (this.checkGnomeCollisions(g1, g2))
+                this.battleCollision(g1, g2);
+            });
+          }
+        }
+      })
+    }
   }
 
   teamCollision(g1, g2) {
     // get gnome stats
+    console.log('teamcollision');
     const newStrength = g1.strength + g2.strength;
     const team = g1.team;
     const position = g1.moveToPos;
     // delete both gnomes
-    this.removeGnome(g1.id);
-    this.removeGnome(g2.id);
+    this.removeGnome(g1);
+    this.removeGnome(g2);
     // create new gnome in spot
     const gnome = newGnome(newStrength, team);
     gnome.moveToPos = position;
@@ -90,9 +98,11 @@ class Game {
 
   removeGnome(gnome) {
     // change logic so that gnomes positions are not mapped into maze rows? Makes it easier to delete them in 1 place.
-    this.team1 = this.team1.filter(g => g.id !== gnome.id);
-    this.team2 = this.team2.filter(g => g.id !== gnome.id);
-    this.maze.rows[gnome.position[0], gnome.position[1]] = ' ';
+    for (const team in this.teams) {
+      this.teams[team] = this.teams[team].filter(g => g.id !== gnome.id);
+    }
+    // this.maze.rows[pos[0], pos[1]] = ' ';
+    gnome.inPlay = false;
     gnome = null;
   }
 

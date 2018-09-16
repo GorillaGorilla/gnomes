@@ -20,6 +20,7 @@ class Gnome {
     this.position = [0, 0];
     this.moveSpeed = 1;
     this.brain = brain;
+    this.inPlay = true;
   }
 
   update() {

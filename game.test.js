@@ -24,22 +24,49 @@ describe('Game', () => {
     (pos1[0] === pos2[0] && pos1[1] === pos2[1]).should.equal(false);
   });
 
-  it('check collision function', () => {
+  it('check collision function handles 2 enemies', () => {
     const pos1 = [4, 1];
     const pos2 = [2, 1];
     const destination = [3, 1];
-    game.team1.pop();
-    game.team2.pop();
-    game.team1[0].position = pos1;
-    game.team2[0].position = pos2;
-    game.team1[0].strength = 5;
-    game.team2[0].strength = 3;
-    game.team1[0].moveToPos = destination;
-    game.team2[0].moveToPos = destination;
+    const {beasts, angels}  = game.teams;
+    beasts.pop();
+    angels.pop();
+    beasts[0].position = pos1;
+    angels[0].position = pos2;
+    beasts[0].strength = 5;
+    angels[0].strength = 3;
+    beasts[0].moveToPos = destination;
+    angels[0].moveToPos = destination;
     game.checkCollisions();
-    game.team2.should.have.length(0);
-    game.team1[0].moveToPos[0].should.equal(3);
-    game.team1[0].moveToPos[1].should.equal(1);
+    game.teams['angels'].should.have.length(0);
+    game.teams['beasts'][0].moveToPos[0].should.equal(3);
+    game.teams['beasts'][0].moveToPos[1].should.equal(1);
+  });
+
+  it('check collision function handles 2 allies', () => {
+    const pos1 = [4, 1];
+    const pos2 = [2, 1];
+    const destination = [3, 1];
+    // get the 2nd gnome
+    const g2 = game.teams['beasts'].pop();
+    const g1 = game.teams['beasts'][0];
+    g1.strength = 3;
+    g2.strength = 3;
+    // clear team2
+    game.teams['angels'].pop();
+    game.teams['angels'].pop();
+    // add the gnome back into team1
+    game.teams['beasts'].push(g2);
+    g1.position = pos1;
+    g2.position = pos2;
+    g1.moveToPos = destination;
+    g2.moveToPos = destination;
+    game.checkCollisions();
+    game.teams['angels'].should.have.length(0);
+    game.teams['beasts'].should.have.length(1);
+    game.teams['beasts'][0].moveToPos[0].should.equal(3);
+    game.teams['beasts'][0].moveToPos[1].should.equal(1);
+    game.teams['beasts'][0].strength.should.equal(6);
   });
 
   it('should check colisions between gnomes after each step', () => {
