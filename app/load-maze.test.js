@@ -47,9 +47,10 @@ describe('Loading the maze', () => {
 #     #   #  #  #    ##
 #  x                  #
 #######################`;
-    maze.rows[0][0].should.equal('#');
-    maze.rows[1][0].should.equal('#');
-    maze.rows[1][1].should.equal(' ');
+    const rows = maze.generateMaze(stringData);
+    rows[0][0].should.equal('#');
+    rows[1][0].should.equal('#');
+    rows[1][1].should.equal(' ');
   });
 
   it('init should create stuff', (done) => {

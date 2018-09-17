@@ -68,24 +68,6 @@ describe('Game', () => {
     game.teams['beasts'][0].strength.should.equal(6);
   });
 
-  it('should check colisions between gnomes after each step', () => {
-    console.log('START');
-    console.log(game.team1);
-    console.log(game.team2);
-    game.step();
-    console.log('1');
-    console.log(game.team1);
-    console.log(game.team2);
-    game.step();
-    console.log('2');
-    console.log(game.team1);
-    console.log(game.team2);
-    game.step();
-    console.log('3');
-    console.log(game.team1);
-    console.log(game.team2);
-  });
-
   it('should have a function returning the total number of gnomes', () => {
     const result4 = game.remainingGnomesCount();
     result4.should.equal(4);
