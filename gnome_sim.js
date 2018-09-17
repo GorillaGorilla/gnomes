@@ -1,4 +1,4 @@
-const { Game } = require('./game');
+const { Game } = require('./app/game');
 
 const teamName = [
   'angels',
@@ -28,7 +28,7 @@ let count = 0;
 const game = new Game();
 
 game.init(teamName.slice(0, numberOfTeams), numberOfGnomes).then(() => {
-  startSim(game, 300);
+  startSim(game, 30);
 });
 
 function startSim(game, rate) {
@@ -36,7 +36,7 @@ function startSim(game, rate) {
     game.step();
     game.render();
     // maximum 300 steps or it gets boring
-    if (count > 300) {
+    if (game.remainingGnomesCount() <= 1 || count > 5000) {
       clearInterval(timeout);
     }
     count ++;

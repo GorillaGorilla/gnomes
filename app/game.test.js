@@ -89,8 +89,12 @@ describe('Game', () => {
 
   });
 
-  it('should have a loop to update the state each turn', () => {
-    // game.step();
+  it('should have a function returning the total number of gnomes', () => {
+    const result4 = game.remainingGnomesCount();
+    result4.should.equal(4);
+    const {beasts, angels}  = game.teams;
+    game.removeGnome(beasts[0]);
+    game.remainingGnomesCount().should.equal(3);
   });
 
   it('should have a function to calculate when collisions occur between gnomes', () => {

@@ -135,6 +135,14 @@ class Game {
     return rows;
   }
 
+  remainingGnomesCount() {
+    let total = 0;
+    for (const team in this.teams) {
+      total += this.teams[team].length;
+    }
+    return total;
+  }
+
   rowsToString(rows) {
     return rows.map((row) => row.join('')).reduce((a,c) => {
       return a + '\n' + c;

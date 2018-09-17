@@ -2,9 +2,9 @@
   "name": "gnome-maze",
   "version": "1.0.0",
   "description": "awesome gnome simulator",
-  "main": "index.js",
+  "main": "gnome_sim.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha --reporter spec ."
+    "test": "node_modules/mocha/bin/mocha --reporter spec ./app/"
   },
   "author": "FM",
   "license": "ISC",
