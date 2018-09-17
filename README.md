@@ -1,4 +1,4 @@
-### Gnome Simulator
+# Gnome Simulator
 
 ## Installation
 
