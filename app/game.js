@@ -10,7 +10,6 @@ class Game {
     this.maze = new Maze(path);
     this.gnomes = [];
     this.teams = {};
-    this.interval = null;
   }
 
   createTeam(teamName, n) {
@@ -152,17 +151,6 @@ class Game {
   render() {
     const output = this.rowsToString(this.getMazeRowsWithGnomes());
     console.log(output);
-  }
-
-  startSim(rate) {
-    this.interval = setInterval(() => {
-      this.step
-    }, rate);
-
-  }
-
-  stopSim() {
-    clearInterval(this.interval);
   }
 };
 

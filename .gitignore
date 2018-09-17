@@ -1,3 +1,4 @@
 .sonarlint
 .vs
 node_modules
+.nyc_output/

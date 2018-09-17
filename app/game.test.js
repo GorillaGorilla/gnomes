@@ -97,10 +97,6 @@ describe('Game', () => {
     game.remainingGnomesCount().should.equal(3);
   });
 
-  it('should have a function to calculate when collisions occur between gnomes', () => {
-
-  });
-
   describe('Rendering the game state', () => {
     it('should have a function to replicate the maze rows and add in gnomes', () => {
       const pos1 = [4, 1];
@@ -131,14 +127,14 @@ describe('Game', () => {
       
     });
     it('should render', () => {
-      game.step();
-      game.render();
-      game.step();
-      game.render();
-      game.step();
-      game.render();
-      game.step();
-      game.render();
+      // game.step();
+      // game.render();
+      // game.step();
+      // game.render();
+      // game.step();
+      // game.render();
+      // game.step();
+      // game.render();
     });
   })
 });
