@@ -6,7 +6,6 @@ chai.should();
 let game;
 
 describe('Game', () => {
-
   beforeEach(() => {
     game = new Game();
     return game.init(['angels', 'beasts'], 2);
@@ -28,7 +27,7 @@ describe('Game', () => {
     const pos1 = [4, 1];
     const pos2 = [2, 1];
     const destination = [3, 1];
-    const {beasts, angels}  = game.teams;
+    const { beasts, angels }  = game.teams;
     beasts.pop();
     angels.pop();
     beasts[0].position = pos1;
@@ -85,14 +84,12 @@ describe('Game', () => {
     console.log('3');
     console.log(game.team1);
     console.log(game.team2);
-    
-
   });
 
   it('should have a function returning the total number of gnomes', () => {
     const result4 = game.remainingGnomesCount();
     result4.should.equal(4);
-    const {beasts, angels}  = game.teams;
+    const { beasts }  = game.teams;
     game.removeGnome(beasts[0]);
     game.remainingGnomesCount().should.equal(3);
   });
@@ -101,8 +98,7 @@ describe('Game', () => {
     it('should have a function to replicate the maze rows and add in gnomes', () => {
       const pos1 = [4, 1];
       const pos2 = [2, 1];
-      const destination = [3, 1];
-      const {beasts, angels}  = game.teams;
+      const { beasts, angels }  = game.teams;
       beasts.pop();
       angels.pop();
       beasts[0].position = pos1;
@@ -114,8 +110,7 @@ describe('Game', () => {
     it('should have a function to output the maze as a string', () => {
       const pos1 = [4, 1];
       const pos2 = [2, 1];
-      const destination = [3, 1];
-      const {beasts, angels}  = game.teams;
+      const { beasts, angels }  = game.teams;
       beasts.pop();
       angels.pop();
       beasts[0].position = pos1;
@@ -124,7 +119,6 @@ describe('Game', () => {
       const strings = game.rowsToString(rows);
       // console.log('strings', strings);
       strings.should.be.a('string');
-      
     });
     it('should render', () => {
       // game.step();
@@ -136,5 +130,5 @@ describe('Game', () => {
       // game.step();
       // game.render();
     });
-  })
+  });
 });

@@ -35,5 +35,5 @@ describe('Routines: randomCardinal', () => {
     (result[0] <=1 && result[0] >=-1).should.equal(true);
     (result[1] <=1 && result[0] >=-1).should.equal(true);
   });
-})
+});
 

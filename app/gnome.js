@@ -8,7 +8,7 @@ const randomCardinal = () => {
     1: [-1, 0],  //south
     2: [0, 1],  //east
     3: [0, -1],  //west
-  }
+  };
   return direction[Math.floor(Math.random() * 4)];
 };
 
@@ -42,7 +42,7 @@ let gnomeCount = 0;
 
 const newGnome = (strength, team) => {
   const g = new Gnome(strength, team, gnomeCount);
-  gnomeCount ++;
+  gnomeCount++;
   return g;
 };
 

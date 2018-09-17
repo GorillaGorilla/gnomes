@@ -1,5 +1,5 @@
 const { Maze } = require('./maze');
-const { Gnome, newGnome }  =require('./gnome');
+const { newGnome }  =require('./gnome');
 
 const isSamePosition = (p1, p2) => {
   return p1[0] === p2[0] && p1[1] === p2[1];
@@ -33,7 +33,6 @@ class Game {
 
   checkCollisions() {
     // assume if 4 gnomes approach the same space at once 2 of each team they will combine first and then fight.
-    
     for (const team in this.teams) {
       this.teams[team].forEach((g1) => {
         this.teams[team].filter(g2 => g1.id !== g2.id).forEach((g2) => {
@@ -52,12 +51,13 @@ class Game {
         for (const team2 in this.teams) {
           if (team2 !== team1) {
             this.teams[team2].forEach((g2) => {
-              if (this.checkGnomeCollisions(g1, g2))
+              if (this.checkGnomeCollisions(g1, g2)){
                 this.battleCollision(g1, g2);
+              }
             });
           }
         }
-      })
+      });
     }
   }
 
@@ -68,15 +68,15 @@ class Game {
     const team = g1.team;
     const position = g1.moveToPos;
     // delete both gnomes
-    console.log(`${g1.name} and ${g2.name} from team ${team} have met at (${position[1]},${position[0]}) and combined into a strength ${newStrength} gnome.`);
-
+    console.log(`${g1.name} and ${g2.name} from team ${team} have met at 
+    (${position[1]},${position[0]}) and combined into a strength ${newStrength} gnome.`);
     this.removeGnome(g1);
     this.removeGnome(g2);
     // create new gnome in spot
     const gnome = newGnome(newStrength, team);
     gnome.moveToPos = position;
     this.teams[team].push(gnome);
-    }
+  }
 
   battleCollision(g1, g2) {
     // delete weaker gnome
@@ -85,9 +85,10 @@ class Game {
     });
     const position = g1.moveToPos;
     const winningGnome = ranking[0];
-    console.log(`${winningGnome.name} from ${winningGnome.team}, ${ranking[1].name} from ${ranking[1].team} have fought at (${position[1]},${position[0]}) and ${winningGnome.name} from ${winningGnome.team} was victorious.`);
+    console.log(`${winningGnome.name} from ${winningGnome.team}, ${ranking[1].name} from ${ranking[1].team} 
+    have fought at (${position[1]},${position[0]}) and ${winningGnome.name} from ${winningGnome.team} was victorious.`);
     this.removeGnome(ranking[1]);
-    }
+  }
 
   removeGnome(gnome) {
     // change logic so that gnomes positions are not mapped into maze rows? Makes it easier to delete them in 1 place.
@@ -104,7 +105,7 @@ class Game {
   }
 
   step() {
-    for( const team in this.teams) {
+    for ( const team in this.teams) {
       this.teams[team].forEach((gnome) => {
         gnome.update();
         if (!this.maze.isWalkable(gnome.moveToPos)){
@@ -117,7 +118,7 @@ class Game {
   }
 
   executeMoves() {
-    for( const team in this.teams) {
+    for ( const team in this.teams) {
       this.teams[team].forEach((gnome) => {
         this.maze.placeGnome(gnome, gnome.moveToPos);
       });

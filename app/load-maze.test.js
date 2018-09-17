@@ -47,7 +47,6 @@ describe('Loading the maze', () => {
 #     #   #  #  #    ##
 #  x                  #
 #######################`;
-    const result = maze.generateMaze(stringData);
     maze.rows[0][0].should.equal('#');
     maze.rows[1][0].should.equal('#');
     maze.rows[1][1].should.equal(' ');
@@ -56,7 +55,7 @@ describe('Loading the maze', () => {
   it('init should create stuff', (done) => {
     const test_maze_path = './test_maze.txt';
     const maze = new Maze(test_maze_path);
-    maze.init().then((data) => {
+    maze.init().then(() => {
       maze.rows[0][0].should.equal('#');
       maze.rows[1][0].should.equal('#');
       maze.rows[1][1].should.equal(' ');
@@ -65,11 +64,11 @@ describe('Loading the maze', () => {
   });
 
   it('should have a function isWalkable', () => {
-    const test_maze_path = './test_maze.txt';
-    const maze = new Maze(test_maze_path);
-    maze.init().then((data) => {
+    const testMazePath = './test_maze.txt';
+    const maze = new Maze(testMazePath);
+    maze.init().then(() => {
       maze.isWalkable([1, 1]).should.equal(true);
       maze.isWalkable([0, 0]).should.equal(false);
     });
-  })
+  });
 });

@@ -1,5 +1,4 @@
 const fs = require('fs');
-const Gnome = require('./gnome');
 
 const loadTextFile = (path) => {
   return new Promise((resolve, reject) => {
@@ -24,7 +23,7 @@ class Maze {
 
   init() {
     return this.loadMaze().then(this.generateMaze.bind(this))
-    .catch(e => console.log('error loading', e));
+      .catch(e => console.log('error loading', e));
   }
 
   loadMaze() {
@@ -40,10 +39,10 @@ class Maze {
     // remember that coords are [y, x] >_<
     data.split('').forEach((el) => {
       if (el === '\n') {
-        row ++;
+        row++;
         this.rows[row] = [];
         return;
-      } 
+      }
       this.rows[row].push(el);
     });
     this.y_dimension = this.rows.length;
@@ -58,20 +57,20 @@ class Maze {
       const y = Math.floor(Math.random() * this.y_dimension);
       if (this.rows[y][x] === ' ') {
         this.placeGnome(gnome, [y, x]);
-      placed = true;
+        placed = true;
       }
     }
   }
 
   isWalkable(pos) {
-    return this.rows[pos[0]][pos[1]] === ' '
+    return this.rows[pos[0]][pos[1]] === ' ';
   }
 
   placeGnome(gnome, pos) {
     if (this.isWalkable(pos)) {
-        // space is free;
-        // this.rows[pos[0]][pos[1]] = gnome;
-        return gnome.position = pos;
+      // space is free;
+      // this.rows[pos[0]][pos[1]] = gnome;
+      return gnome.position = pos;
     }
     throw new Error('Cannot place gnome in occupied position!');
   }
@@ -80,10 +79,6 @@ class Maze {
     return this.rows.map(el => el.map(e => e));
   }
 }
-
-const newMaze = () => {
-
-};
 
 module.exports = { Maze,
   loadTextFile,

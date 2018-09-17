@@ -39,7 +39,7 @@ function startSim(game, rate) {
     if (game.remainingGnomesCount() <= 1 || count > 5000) {
       clearInterval(timeout);
     }
-    count ++;
+    count++;
   }, rate);
 }
 
