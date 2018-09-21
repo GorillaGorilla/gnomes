@@ -1,5 +1,5 @@
 const { Maze } = require('./maze');
-const { newGnome }  =require('./gnome');
+const { newGnome }  = require('./gnome');
 
 const isSamePosition = (p1, p2) => {
   return p1[0] === p2[0] && p1[1] === p2[1];
@@ -79,7 +79,6 @@ class Game {
   }
 
   battleCollision(g1, g2) {
-    // delete weaker gnome
     const ranking = [g1, g2].sort((b, a) => {
       return a.strength - b.strength;
     });
@@ -87,6 +86,7 @@ class Game {
     const winningGnome = ranking[0];
     console.log(`${winningGnome.name} from ${winningGnome.team}, ${ranking[1].name} from ${ranking[1].team} 
     have fought at (${position[1]},${position[0]}) and ${winningGnome.name} from ${winningGnome.team} was victorious.`);
+    // delete weaker gnome
     this.removeGnome(ranking[1]);
   }
 
