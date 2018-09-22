@@ -25,6 +25,8 @@
     "eslint-plugin-jsdoc": "^3.8.0",
     "mocha": "^5.2.0",
     "nyc": "^13.0.1",
+    "raw-loader": "^0.5.1",
+    "sinon": "^6.3.4",
     "webpack-cli": "^3.1.0"
   }
 }

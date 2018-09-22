@@ -6,8 +6,11 @@ const isSamePosition = (p1, p2) => {
 };
 
 class Game {
-  constructor(path){
+  constructor({ teamNames, teamSize, renderer, path }){
     this.maze = new Maze(path);
+    this.renderer = renderer;
+    this.teamNames = teamNames;
+    this.teamSize = teamSize;
     this.gnomes = [];
     this.teams = {};
   }
@@ -19,9 +22,10 @@ class Game {
     });
   }
 
-  init(teamNames, n) {
+  init() {
     return this.maze.init().then(() => {
-      teamNames.forEach((name) => this.teams[name] = this.createTeam(name, n));
+      
+      this.teamNames.forEach((name) => this.teams[name] = this.createTeam(name, this.teamSize));
       for (const team in this.teams) {
         this.teams[team].forEach((gnome) => {
           this.maze.placeGnomeRandomly(gnome);
@@ -151,7 +155,8 @@ class Game {
 
   render() {
     const output = this.rowsToString(this.getMazeRowsWithGnomes());
-    console.log(output);
+    this.renderer(output);
+    // console.log(output);
   }
 };
 

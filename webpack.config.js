@@ -1,14 +1,22 @@
 const path = require('path');
 
 module.exports = {
-  entry: './app/game.js',
+  entry: './app/browser.js',
   output: {
     filename: 'js/bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  mode: 'none',
   devtool: 'inline-source-map',
+  node: {
+    fs: 'empty'
+  },
   module: {
     rules: [
+      {
+        test: /\.txt$/,
+        use: 'raw-loader'
+      },
       {
         test: /\.js$/,
         exclude: /(node_modules)/,

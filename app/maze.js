@@ -1,16 +1,16 @@
-const fs = require('fs');
-
-const loadTextFile = (path) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (err, data) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(data);
+const loader = (path) => {
+  if (typeof window === 'undefined') {
+    const { loadTextFile } = require('./loadTextFile');
+    return loadTextFile(path);
+  } else {
+    const data = require(`../${path}`);
+    return new Promise((resolve, reject) => {
+      return resolve(data);
     });
-  });
+  }
 };
 
+const { loadTextFile } = require('./loadTextFile');
 
 class Maze {
   constructor(path) {
@@ -27,7 +27,7 @@ class Maze {
   }
 
   loadMaze() {
-    return loadTextFile(this.path).then((data) => {
+    return loader(this.path).then((data) => {
       this.loaded = true;
       return data;
     });
