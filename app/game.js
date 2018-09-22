@@ -24,7 +24,6 @@ class Game {
 
   init() {
     return this.maze.init().then(() => {
-      
       this.teamNames.forEach((name) => this.teams[name] = this.createTeam(name, this.teamSize));
       for (const team in this.teams) {
         this.teams[team].forEach((gnome) => {

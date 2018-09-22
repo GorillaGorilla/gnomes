@@ -1,5 +1,6 @@
 .sonarlint
 .vscode
+.DS_Store
 dist/
 node_modules
 .nyc_output/

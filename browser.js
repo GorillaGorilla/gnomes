@@ -36,13 +36,14 @@ const  start = (e) => {
   const numberOfGnomes = Number(document.getElementById('gnomeNumber').value);
 
   const renderer = (dataString) => {
-    document.getElementById('maze').value = dataString;
+
+    document.getElementById('maze').innerHTML = dataString;
   };
 
-  console.log( numberOfTeams, numberOfGnomes, typeof numberOfTeams);
-  const game = new Game();
+  const config = { teamNames: teamName.slice(0, numberOfTeams), teamSize: numberOfGnomes, renderer };
+  const game = new Game(config);
 
-  game.init(teamName.slice(0, numberOfTeams), numberOfGnomes).then(() => {
+  game.init().then(() => {
     console.log('game ready');
     startSim(game, 30);
   });

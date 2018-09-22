@@ -25,9 +25,12 @@ if (numberOfGnomes * numberOfTeams > 40 ) {
 let timeout = null;
 let count = 0;
 
-const game = new Game();
+const renderer = (string) => console.log(string);
+const config = { teamNames: teamName.slice(0, numberOfTeams), teamSize: numberOfGnomes, renderer };
 
-game.init(teamName.slice(0, numberOfTeams), numberOfGnomes).then(() => {
+const game = new Game(config);
+
+game.init().then(() => {
   startSim(game, 30);
 });
 

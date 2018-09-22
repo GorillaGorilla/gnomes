@@ -55,7 +55,7 @@ class Maze {
     while (placed === false) {
       const x = Math.floor(Math.random() * this.x_dimension);
       const y = Math.floor(Math.random() * this.y_dimension);
-      if (this.rows[y][x] === ' ') {
+      if (this.isWalkable([y, x])) {
         this.placeGnome(gnome, [y, x]);
         placed = true;
       }
