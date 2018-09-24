@@ -25,7 +25,10 @@ if (numberOfGnomes * numberOfTeams > 40 ) {
 let timeout = null;
 let count = 0;
 
-const renderer = (string) => console.log(string);
+const renderer = (game, string) => {
+  console.log(game.events);
+  console.log(string);
+};
 const config = { teamNames: teamName.slice(0, numberOfTeams), teamSize: numberOfGnomes, renderer };
 
 const game = new Game(config);

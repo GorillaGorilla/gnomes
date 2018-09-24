@@ -35,8 +35,7 @@ const  start = (e) => {
   const numberOfTeams = Number(document.getElementById('teamNumber').value);
   const numberOfGnomes = Number(document.getElementById('gnomeNumber').value);
 
-  const renderer = (dataString) => {
-
+  const renderer = (game, dataString) => {
     document.getElementById('maze').innerHTML = dataString;
   };
 

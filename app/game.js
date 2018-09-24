@@ -13,6 +13,7 @@ class Game {
     this.teamSize = teamSize;
     this.gnomes = [];
     this.teams = {};
+    this.events = [];
   }
 
   createTeam(teamName, n) {
@@ -71,7 +72,7 @@ class Game {
     const team = g1.team;
     const position = g1.moveToPos;
     // delete both gnomes
-    console.log(`${g1.name} and ${g2.name} from team ${team} have met at 
+    this.events.push(`${g1.name} and ${g2.name} from team ${team} have met at 
     (${position[1]},${position[0]}) and combined into a strength ${newStrength} gnome.`);
     this.removeGnome(g1);
     this.removeGnome(g2);
@@ -87,7 +88,7 @@ class Game {
     });
     const position = g1.moveToPos;
     const winningGnome = ranking[0];
-    console.log(`${winningGnome.name} from ${winningGnome.team}, ${ranking[1].name} from ${ranking[1].team} 
+    this.events.push(`${winningGnome.name} from ${winningGnome.team}, ${ranking[1].name} from ${ranking[1].team} 
     have fought at (${position[1]},${position[0]}) and ${winningGnome.name} from ${winningGnome.team} was victorious.`);
     // delete weaker gnome
     this.removeGnome(ranking[1]);
@@ -154,7 +155,7 @@ class Game {
 
   render() {
     const output = this.rowsToString(this.getMazeRowsWithGnomes());
-    this.renderer(output);
+    this.renderer(this, output);
     // console.log(output);
   }
 };

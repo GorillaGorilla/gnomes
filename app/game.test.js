@@ -15,7 +15,6 @@ describe('Game', () => {
   });
 
   describe('After initialisation', () => {
-
     beforeEach(() => {
       game = new Game(config);
       return game.init();
@@ -75,6 +74,7 @@ describe('Game', () => {
       game.teams['beasts'][0].moveToPos[0].should.equal(3);
       game.teams['beasts'][0].moveToPos[1].should.equal(1);
       game.teams['beasts'][0].strength.should.equal(6);
+      game.events.should.have.length(1);
     });
 
     it('should count the number of gnomes', () => {
