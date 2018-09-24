@@ -51,7 +51,7 @@ describe('Game', () => {
       game.teams['beasts'][0].moveToPos[1].should.equal(1);
     });
 
-    it('should have collisions between 2 allies', () => {
+    it('should handle collisions between 2 allies', () => {
       const pos1 = [4, 1];
       const pos2 = [2, 1];
       const destination = [3, 1];
@@ -77,7 +77,7 @@ describe('Game', () => {
       game.teams['beasts'][0].strength.should.equal(6);
     });
 
-    it('should have a function returning the total number of gnomes', () => {
+    it('should count the number of gnomes', () => {
       const result4 = game.remainingGnomesCount();
       result4.should.equal(4);
       const { beasts }  = game.teams;
@@ -86,7 +86,7 @@ describe('Game', () => {
     });
 
     describe('Rendering the game state', () => {
-      it('should have a function to replicate the maze rows and add in gnomes', () => {
+      it('should create a snapshot of the maze rows with Gnomes as capital letters', () => {
         const pos1 = [4, 1];
         const pos2 = [2, 1];
         const { beasts, angels }  = game.teams;
@@ -98,7 +98,7 @@ describe('Game', () => {
         rows[4][1].should.equal('B');
         rows[2][1].should.equal('A');
       });
-      it('should have a function to output the maze as a string', () => {
+      it('should convert the maze a string representation', () => {
         const pos1 = [4, 1];
         const pos2 = [2, 1];
         const { beasts, angels }  = game.teams;
