@@ -4,14 +4,143 @@
   </head>
   <body>
     <script src="./dist/js/bundle.js"></script>
-    <div><h2>Gnomes</h2></div>
-    <!-- <form> -->
 
-      <input id="teamNumber" type="number" value="2"/>
-      <input id="gnomeNumber" type="number" value="2"/>
-      <button id="bStart">Start!</button>
-      <br>
-      <div id="maze" class="maze"></div>
+    <div class="page">
+      <div class="heading-title"><h2>Gnomes</h2></div>
+    <!-- <form> -->
+      <div class="buttons">
+        <div class="label-team" grid-area="teamLabel">Number of Teams</div>
+        <div class="label-gnomes" grid-area="gnomeLabel" >Number of Gnomes</div>
+        <input class="input-team" type="number" id="teamNumber" value="2"/>
+        <input class="input-gnomes" type="number" id="gnomeNumber" value="2"/>
+        <button class="bStart" id="bStart">Start!</button>
+      </div>
+      
     <!-- </form> -->
+      <!-- <div id="maze" class="maze">
+
+      </div> -->
+      <div class="container">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+        <div class="item">8</div>
+        <div class="item">9</div>
+        <div class="item">10</div>
+      </div>
+    </div>
+
+    <div class="map" id="map"></div>
+    
+    <style>
+
+      .page {
+        display: grid;
+        grid-template-columns: 1fr 460px 1fr;
+        grid-template-rows: 75px 200px;
+        grid-template-areas:
+        "header header header"
+        "side1 content side2"
+        "side1 content side2"
+      }
+
+      .heading-title {
+        grid-area: header;
+        display: grid;
+        /* align-items: center; */
+        justify-content: center;
+      }
+
+      h2 {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .buttons {
+        grid-area: side1;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: 
+        "teamLabel teamLabel inputTeam"
+        "gnomeLabel gnomeLabel inputGnomes"
+        "bStart bStart bStart";
+      }
+
+      .bStart {
+        grid-area: bStart;
+      }
+      .input-team {
+        grid-area: inputTeam;
+        max-width: 50px;
+        justify-self: end;
+      }
+      .input-gnomes {
+        grid-area: inputGnomes;
+        max-width: 50px;
+        justify-self: end;
+      }
+
+      .label-gnomes {
+        align-self: center;
+        grid-area: gnomeLabel;
+      }
+
+      .label-team {
+        align-self: center;
+        grid-area: teamLabel;
+      }
+
+      .container {
+        grid-area: content;
+        height: 180px;
+        display: grid;
+        grid-gap: 0px;
+        border: 2px solid hotpink;
+        justify-items: center;
+        align-items: center;
+        grid-template-columns: repeat(23, 1fr);
+        grid-template-rows: repeat(9,1fr);
+      }
+      .item {
+        align-self: stretch;
+        justify-self: center;
+        align-content: center;
+        border: 2px solid black;
+        border-radius: 5px;
+        background-color: aquamarine;
+      }
+    </style>
+
+    <script>
+      async function newFunc() {
+        return 1;
+      }
+
+      testF().then((data) => {
+        console.log('after', data);
+      });
+
+      async function testF() {
+        const rawResponse = await fetch('https://httpbin.org/post', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({a: 1, b: 'Textual content'})
+        });
+        const content = await rawResponse.json();
+
+        console.log(content);
+        return content;
+      }
+
+      newFunc().then( d => console.log(d));
+    </script>
   </body>
 </html>

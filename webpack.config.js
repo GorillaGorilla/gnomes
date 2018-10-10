@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: [/(node_modules)/, path.resolve(__dirname, '/dist')],
         use: {
           loader: 'babel-loader',
           options: {

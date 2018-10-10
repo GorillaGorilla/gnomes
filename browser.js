@@ -35,8 +35,14 @@ const  start = (e) => {
   const numberOfTeams = Number(document.getElementById('teamNumber').value);
   const numberOfGnomes = Number(document.getElementById('gnomeNumber').value);
 
+  async function newFunc() {
+    return 1;
+  }
+
+  newFunc().then( d => console.log(d));
+
   const renderer = (game, dataString) => {
-    document.getElementById('maze').innerHTML = dataString;
+    // document.getElementById('maze').innerHTML = dataString;
   };
 
   const config = { teamNames: teamName.slice(0, numberOfTeams), teamSize: numberOfGnomes, renderer };
