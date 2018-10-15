@@ -1,6 +1,7 @@
 <html>
   <head>
-
+    <title>Gnomes</title>
+      <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
   </head>
   <body>
     <script src="./dist/js/bundle.js"></script>
@@ -13,7 +14,7 @@
         <div class="label-gnomes" grid-area="gnomeLabel" >Number of Gnomes</div>
         <input class="input-team" type="number" id="teamNumber" value="2"/>
         <input class="input-gnomes" type="number" id="gnomeNumber" value="2"/>
-        <button class="bStart" id="bStart">Start!</button>
+        <button class="bStart" >Start!</button>
       </div>
       
     <!-- </form> -->
@@ -21,22 +22,17 @@
 
       </div> -->
       <div class="container">
-        <div class="item">1</div>
-        <div class="item">2</div>
-        <div class="item">3</div>
-        <div class="item">4</div>
-        <div class="item">5</div>
-        <div class="item">6</div>
-        <div class="item">7</div>
-        <div class="item">8</div>
-        <div class="item">9</div>
-        <div class="item">10</div>
+        
       </div>
     </div>
 
     <div class="map" id="map"></div>
     
     <style>
+
+      body {
+        font-family: 'Muli', sans-serif;
+      }
 
       .page {
         display: grid;
@@ -100,11 +96,11 @@
         height: 180px;
         display: grid;
         grid-gap: 0px;
-        border: 2px solid hotpink;
         justify-items: center;
         align-items: center;
         grid-template-columns: repeat(23, 1fr);
         grid-template-rows: repeat(9,1fr);
+        background-color: brown;
       }
       .item {
         align-self: stretch;
@@ -114,33 +110,18 @@
         border-radius: 5px;
         background-color: aquamarine;
       }
+
+      .wall {
+        background-color: darkslategray;
+        height: 20px;
+        width: 20px;
+      }
+
+      .gnome {
+        background-color: darkgoldenrod;
+        height: 20px;
+        width: 20px;
+      }
     </style>
-
-    <script>
-      async function newFunc() {
-        return 1;
-      }
-
-      testF().then((data) => {
-        console.log('after', data);
-      });
-
-      async function testF() {
-        const rawResponse = await fetch('https://httpbin.org/post', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({a: 1, b: 'Textual content'})
-        });
-        const content = await rawResponse.json();
-
-        console.log(content);
-        return content;
-      }
-
-      newFunc().then( d => console.log(d));
-    </script>
   </body>
 </html>

@@ -1,13 +1,17 @@
 const path = require('path');
 
 module.exports = {
-  entry: './browser.js',
+  entry: './src/browser.js',
   output: {
     filename: 'js/bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   mode: 'none',
   devtool: 'inline-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 9000
+  },
   node: {
     fs: 'empty'
   },
@@ -19,7 +23,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: [/(node_modules)/, path.resolve(__dirname, '/dist')],
+        exclude: [/(node_modules|bower_components)/, /(dist)/, path.resolve(__dirname, 'server.js'), /(sync)/],
         use: {
           loader: 'babel-loader',
           options: {

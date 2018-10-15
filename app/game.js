@@ -121,6 +121,22 @@ class Game {
     this.executeMoves();
   }
 
+  getTeam(teamName) {
+    return this.teams[teamName];
+  }
+
+  getGnome(id) {
+    let gnome = [];
+    for (const team in this.teams) {
+      gnome = gnome.concat(this.getTeam(team).filter(gnome => gnome.id === id));
+    }
+    if (gnome.length > 0) {
+      return gnome[0];
+    } else {
+      return false;
+    }
+  }
+
   executeMoves() {
     for ( const team in this.teams) {
       this.teams[team].forEach((gnome) => {

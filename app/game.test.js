@@ -25,6 +25,22 @@ describe('Game', () => {
       game.teams.should.have.property('beasts').of.length(2);
     });
 
+    it('should retrieve a team by name', () => {
+      const beasts = game.getTeam('beasts');
+      beasts.should.have.length(2);
+      beasts[0].team.should.equal('beasts');
+    });
+
+    it('should retrieve a gnome by id', () => {
+      const beasts = game.getTeam('beasts');
+      const id = beasts[0].id;
+      console.log(id);
+      const gnome = game.getGnome(id);
+      console.log(gnome.id);
+      (id === gnome.id).should.equal(true);
+    });
+
+
     it('should have a placed the gnomes in different positions', () => {
       const pos1 = game.teams['beasts'][0].position;
       const pos2 = game.teams['beasts'][1].position;
