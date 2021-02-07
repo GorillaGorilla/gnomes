@@ -1,4 +1,4 @@
-const { setBehaviourTreeForGnome } = require('./behaviour');
+const { setBehaviourTreeForGnome, absolute } = require('./behaviour');
 const Chance = require('chance');
 
 const chance = new Chance();
@@ -14,8 +14,6 @@ const randomCardinal = (gnome={}) => {
   gnome.direction = direction;
   return direction;
 };
-
-const absolute = value => value >= 0 ? Math.min(value, 1) : Math.max(value, -1);
 
 
 class Gnome {

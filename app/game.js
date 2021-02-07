@@ -25,7 +25,7 @@ class Game {
   createTeam(teamName, n) {
     return new Array(n).fill({}).map(() => {
       const gnome = newGnome(Math.floor(Math.random()*10), teamName);
-      gnome.setBehaviourTree(this.strategies[teamName] || 'setRandomDirection');
+      gnome.setBehaviourTree(this.strategies[teamName] || 'findWalkableDirection');
       return gnome;
     });
   }
@@ -85,6 +85,7 @@ class Game {
     this.removeGnome(g2);
     // create new gnome in spot
     const gnome = newGnome(newStrength, team);
+    gnome.setBehaviourTree(g1.brain.tree);
     gnome.moveToPos = position;
     this.teams[team].push(gnome);
   }
@@ -174,7 +175,8 @@ class Game {
 
   getMazeSubsection([y, x]) {
     const mazeCopy = this.getMazeRowsWithGnomeReferences();
-    return mazeCopy.slice(y - 2, y + 3).map(col => col.slice(x - 2, x + 3));
+    const los = 1;
+    return mazeCopy.slice(Math.max(0, y - los), Math.min(mazeCopy.length, y + los + 1)).map(col => col.slice(Math.max(0, x - los), Math.min(mazeCopy[0].length, x + los + 1)));
   }
 
   render() {

@@ -67,9 +67,10 @@ describe('Game', () => {
       angels[0].position = pos2;
       // beasts[0].update();
       const env = game.getMazeSubsection(beast.position);
-      console.log('beasts[0].position', beast.position, env);
-      env[1][1].should.equal(beast);
-      console.log('bb', beast.brain);
+      console.log('beasts[0].position', beast.id, beast.position, env);
+      // env[3][3].should.equal(beast);
+      // console.log('bb', beast.brain);
+      console.log('beast.brain', beast.brain);
       beast.update(env);
       beast.direction[0].should.equal(-1);
       beast.direction[1].should.equal(0);
