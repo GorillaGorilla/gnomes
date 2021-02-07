@@ -29,7 +29,8 @@ const renderer = (game, string) => {
   console.log(game.events);
   console.log(string);
 };
-const config = { teamNames: teamName.slice(0, numberOfTeams), teamSize: numberOfGnomes, renderer };
+const strategies = { beasts: 'proactive' };
+const config = { teamNames: teamName.slice(0, numberOfTeams), teamSize: numberOfGnomes, renderer, strategies };
 
 const game = new Game(config);
 

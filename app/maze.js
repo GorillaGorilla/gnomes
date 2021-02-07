@@ -78,6 +78,10 @@ class Maze {
   getMazeRowsCopy() {
     return this.rows.map(el => el.map(e => e));
   }
+
+  getSubSection([y, x]) {
+    return this.rows.slice(x - 1, x + 1).map(col => col.slice(y - 1, y + 1));
+  }
 }
 
 module.exports = { Maze,

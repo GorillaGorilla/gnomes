@@ -5,11 +5,17 @@ const isSamePosition = (p1, p2) => {
   return p1[0] === p2[0] && p1[1] === p2[1];
 };
 
+const didSwapPositions = (g1, g2) => {
+  // console.log('g1.position, g2.lastPosition', g1.position, g2.moveToPos, g2.position, g1.moveToPos, isSamePosition(g1.position, g2.moveToPos) && isSamePosition(g2.position, g1.moveToPos));
+  return isSamePosition(g1.position, g2.moveToPos) && isSamePosition(g2.position, g1.moveToPos);
+};
+
 class Game {
-  constructor({ teamNames, teamSize, renderer, path }){
+  constructor({ teamNames, teamSize, renderer, path, strategies={} }){
     this.maze = new Maze(path);
     this.renderer = renderer;
     this.teamNames = teamNames;
+    this.strategies = strategies;
     this.teamSize = teamSize;
     this.gnomes = [];
     this.teams = {};
@@ -19,6 +25,7 @@ class Game {
   createTeam(teamName, n) {
     return new Array(n).fill({}).map(() => {
       const gnome = newGnome(Math.floor(Math.random()*10), teamName);
+      gnome.setBehaviourTree(this.strategies[teamName] || 'setRandomDirection');
       return gnome;
     });
   }
@@ -105,13 +112,14 @@ class Game {
   }
 
   checkGnomeCollisions(g1, g2) {
-    return isSamePosition(g1.moveToPos, g2.moveToPos);
+    return isSamePosition(g1.moveToPos, g2.moveToPos) || didSwapPositions(g1, g2);
   }
 
   step() {
     for ( const team in this.teams) {
       this.teams[team].forEach((gnome) => {
-        gnome.update();
+
+        gnome.update(this.getMazeSubsection(gnome.position));
         if (!this.maze.isWalkable(gnome.moveToPos)){
           gnome.moveToPos = gnome.position;
         }
@@ -139,6 +147,17 @@ class Game {
     return rows;
   }
 
+  getMazeRowsWithGnomeReferences() {
+    const rows = this.maze.getMazeRowsCopy();
+    for (const team in this.teams) {
+      this.teams[team].forEach((g) => {
+        const { position } = g;
+        rows[position[0]][position[1]] = g;
+      });
+    }
+    return rows;
+  }
+
   remainingGnomesCount() {
     let total = 0;
     for (const team in this.teams) {
@@ -151,6 +170,11 @@ class Game {
     return rows.map((row) => row.join('')).reduce((a,c) => {
       return a + '\n' + c;
     });
+  }
+
+  getMazeSubsection([y, x]) {
+    const mazeCopy = this.getMazeRowsWithGnomeReferences();
+    return mazeCopy.slice(y - 2, y + 3).map(col => col.slice(x - 2, x + 3));
   }
 
   render() {

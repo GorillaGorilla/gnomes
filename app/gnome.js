@@ -1,16 +1,21 @@
+const { setBehaviourTreeForGnome } = require('./behaviour');
 const Chance = require('chance');
 
 const chance = new Chance();
 
-const randomCardinal = () => {
-  const direction = {
+const randomCardinal = (gnome={}) => {
+  const directions = {
     0: [1, 0],  //north
     1: [-1, 0],  //south
     2: [0, 1],  //east
     3: [0, -1],  //west
   };
-  return direction[Math.floor(Math.random() * 4)];
+  const direction = directions[Math.floor(Math.random() * 4)];
+  gnome.direction = direction;
+  return direction;
 };
+
+const absolute = value => value >= 0 ? Math.min(value, 1) : Math.max(value, -1);
 
 
 class Gnome {
@@ -20,21 +25,36 @@ class Gnome {
     this.team = team;
     this.direction = [0, 0];
     this.position = [0, 0];
+    this.lastPosition = [0, 0];
     this.moveSpeed = 1;
-    this.brain = brain;
+    this.brain = { step: brain };
     this.name = chance.name();
     this.inPlay = true;
   }
 
-  update() {
-    this.direction = this.brain();
+  update(environment) {
+    this.currentEnvironment = environment;
+    this.brain.step(this);
     this.moveToPos = this.moveTo();
   }
 
   moveTo() {
-    const destinationY = this.position[0] + this.direction[0] * this.moveSpeed;
-    const destinationX = this.position[1] + this.direction[1] * this.moveSpeed;
+    this.lastPosition = [...this.position];
+    const destinationY = this.position[0] + absolute(this.direction[0]) * this.moveSpeed;
+    const destinationX = this.position[1] + absolute(this.direction[1]) * this.moveSpeed;
     return [destinationY, destinationX];
+  }
+
+  setBehaviourTree(tree) {
+    this.brain = setBehaviourTreeForGnome(this, tree);
+  }
+
+  getGnomesFromEnvironment() {
+    if (!this.currentEnvironment) {
+      return [];
+    }
+
+    return this.currentEnvironment.flat().filter(el => typeof el !== 'string').filter(g => g.id !== this.id) || [];
   }
 }
 

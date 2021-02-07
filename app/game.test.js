@@ -50,6 +50,37 @@ describe('Game', () => {
       game.teams['beasts'][0].moveToPos[1].should.equal(1);
     });
 
+    it('should pass the surroundings to a gnome on step', async () => {
+      const config = { teamNames: ['angels', 'beasts'], teamSize: 2, renderer: sinon.spy(), strategies: { 'beasts': 'proactive', 'angels': 'proactive' } };
+      game = new Game(config);
+      await game.init().then(() => {
+        game.should.have.property('teams');
+      });
+      const pos1 = [4, 1];
+      const pos2 = [3, 1];
+      const destination = [3, 1];
+      const { beasts, angels }  = game.teams;
+      beasts.pop();
+      angels.pop();
+      const beast = beasts[0];
+      beast.position = pos1;
+      angels[0].position = pos2;
+      // beasts[0].update();
+      const env = game.getMazeSubsection(beast.position);
+      console.log('beasts[0].position', beast.position, env);
+      env[1][1].should.equal(beast);
+      console.log('bb', beast.brain);
+      beast.update(env);
+      beast.direction[0].should.equal(-1);
+      beast.direction[1].should.equal(0);
+      beast.moveToPos[0].should.equal(3);
+      beast.moveToPos[1].should.equal(1);
+      game.step();
+
+      // JSON.stringify(env).should.equal(false);
+
+    });
+
     it('should handle collisions between 2 allies', () => {
       const pos1 = [4, 1];
       const pos2 = [2, 1];
