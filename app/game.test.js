@@ -25,6 +25,22 @@ describe('Game', () => {
       game.teams.should.have.property('beasts').of.length(2);
     });
 
+    it('should be able to get a subsection of a maze', () => {
+
+      const subSection = game.getMazeSubsection([0, 0], 2);
+      subSection.length.should.equal(5);
+      subSection[0].length.should.equal(5);
+      const subSection2 = game.getMazeSubsection([8, 0], 2);
+      subSection2.length.should.equal(5);
+      subSection2[0].length.should.equal(5);
+      const subSection3 = game.getMazeSubsection([8, 23], 2);
+      subSection3.length.should.equal(5);
+      subSection3[0].length.should.equal(5);
+      const subSection4 = game.getMazeSubsection([4, 4], 2);
+      subSection4.length.should.equal(5);
+      subSection4[0].length.should.equal(5);
+    });
+
     it('should have a placed the gnomes in different positions', () => {
       const pos1 = game.teams['beasts'][0].position;
       const pos2 = game.teams['beasts'][1].position;
@@ -66,7 +82,8 @@ describe('Game', () => {
       beast.position = pos1;
       angels[0].position = pos2;
       // beasts[0].update();
-      const env = game.getMazeSubsection(beast.position);
+      const env = game.getMazeSubsection(beast.position, beast.los);
+      env.length.should.equal(2*beast.los + 1);
       console.log('beasts[0].position', beast.id, beast.position, env);
       // env[3][3].should.equal(beast);
       // console.log('bb', beast.brain);

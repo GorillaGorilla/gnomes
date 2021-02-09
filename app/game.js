@@ -24,7 +24,7 @@ class Game {
 
   createTeam(teamName, n) {
     return new Array(n).fill({}).map(() => {
-      const gnome = newGnome(Math.floor(Math.random()*10), teamName);
+      const gnome = newGnome(Math.floor(Math.random()*100) + 100, teamName);
       gnome.setBehaviourTree(this.strategies[teamName] || 'findWalkableDirection');
       return gnome;
     });
@@ -94,6 +94,9 @@ class Game {
     const ranking = [g1, g2].sort((b, a) => {
       return a.strength - b.strength;
     });
+    if (g1.strength === g2.strength) {
+      // handle draw...
+    }
     const position = g1.moveToPos;
     const winningGnome = ranking[0];
     this.events.push(`${winningGnome.name} from ${winningGnome.team}, ${ranking[1].name} from ${ranking[1].team} 
@@ -120,7 +123,7 @@ class Game {
     for ( const team in this.teams) {
       this.teams[team].forEach((gnome) => {
 
-        gnome.update(this.getMazeSubsection(gnome.position));
+        gnome.update(this.getMazeSubsection(gnome.position, gnome.los));
         if (!this.maze.isWalkable(gnome.moveToPos)){
           gnome.moveToPos = gnome.position;
         }
@@ -173,10 +176,24 @@ class Game {
     });
   }
 
-  getMazeSubsection([y, x]) {
+  getMazeSubsection([y, x], los=1) {
+    const makeWallRow = length => Array(length).fill('#');
     const mazeCopy = this.getMazeRowsWithGnomeReferences();
-    const los = 1;
-    return mazeCopy.slice(Math.max(0, y - los), Math.min(mazeCopy.length, y + los + 1)).map(col => col.slice(Math.max(0, x - los), Math.min(mazeCopy[0].length, x + los + 1)));
+    const yUnderset = (y - los) < 0 ? Math.abs(y - los) : 0;
+    const xUnderset = (x - los) < 0 ? Math.abs(x - los) : 0;
+    const yOverset = (y + los + 1) > mazeCopy.length ? (y + los + 1 - mazeCopy.length) : 0;
+    const xOverset = (x + los + 1) > mazeCopy[0].length ? (x + los + 1 - mazeCopy[0].length) : 0;
+    // 0 - 2 = -2 add 2 rows of #.
+    const subset = mazeCopy.slice(Math.max(0, y - los), Math.min(mazeCopy.length, y + los + 1)).map(col => col.slice(Math.max(0, x - los), Math.min(mazeCopy[0].length, x + los + 1)));
+
+    return [
+      ...Array(yUnderset).fill({}).map(() => makeWallRow((2 * los) + 1)),
+      ...subset.map(row => [
+        ...makeWallRow(xUnderset),
+        ...row,
+        ...makeWallRow(xOverset)]),
+      ...Array(yOverset).fill({}).map(() => makeWallRow((2 * los) + 1))
+    ];
   }
 
   render() {

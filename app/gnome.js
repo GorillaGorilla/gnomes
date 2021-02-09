@@ -19,6 +19,7 @@ const randomCardinal = (gnome={}) => {
 class Gnome {
   constructor(strength, team, id, brain=randomCardinal) {
     this.id = id;
+    this.los = 4;
     this.strength = strength;
     this.team = team;
     this.direction = [0, 0];

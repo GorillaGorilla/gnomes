@@ -11,7 +11,6 @@ describe('Loading the maze', () => {
       loadTextFile('test_maze.txt').then((stringData) => {
         stringData.should.be.a('string');
         stringData[0].should.equal('#');
-        stringData[23].should.equal('\n');
         done();
       });
     });
@@ -30,7 +29,6 @@ describe('Loading the maze', () => {
     maze.loadMaze().then(result => {
       result.should.be.a('string');
       result[0].should.equal('#');
-      result[23].should.equal('\n');
       maze.loaded.should.equal(true);
       done();
     });
