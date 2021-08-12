@@ -25,7 +25,8 @@ class Game {
   createTeam(teamName, n) {
     return new Array(n).fill({}).map(() => {
       const gnome = newGnome(Math.floor(Math.random()*100) + 100, teamName);
-      gnome.setBehaviourTree(this.strategies[teamName] || 'findWalkableDirection');
+      gnome.setBehaviourTree(this.strategies[teamName] || 'keepGoingUntillWall');
+      // gnome.setBehaviourTree(this.strategies[teamName] || 'findWalkableDirection');
       return gnome;
     });
   }

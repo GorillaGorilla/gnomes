@@ -35,7 +35,7 @@ const config = { teamNames: teamName.slice(0, numberOfTeams), teamSize: numberOf
 const game = new Game(config);
 
 game.init().then(() => {
-  startSim(game, 100);
+  startSim(game, 300);
 });
 
 function startSim(game, rate) {
